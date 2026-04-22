@@ -1,0 +1,15 @@
+.card {
+  border-radius: 1.2rem;
+}
+
+.card-body {
+  background: #ffffff;
+}
+
+.form-label {
+  font-weight: 600;
+}
+
+.table {
+  min-width: 100%;
+}

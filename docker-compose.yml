@@ -1,0 +1,11 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: pedido-frontend:latest
+    ports:
+      - '80:80'
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production

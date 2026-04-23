@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Pedido } from '../../models/pedido';
+import { Order } from '../../models/order';
 
 @Component({
   standalone: true,
@@ -11,16 +11,45 @@ import { Pedido } from '../../models/pedido';
   styleUrls: ['./pedido-list.css'],
 })
 export class PedidoListComponent {
-  @Input() pedidos: Pedido[] | null = [];
-  @Output() crear = new EventEmitter<Pedido>();
+  @Input() pedidos: Order[] | null = [];
+  @Output() crear = new EventEmitter<Order>();
+  @Output() editar = new EventEmitter<{pedido: Order, id: number}>();
+  @Output() eliminar = new EventEmitter<number>();
 
-nuevo: Pedido = {
-  nombre: '',
-  total: 0
-};
+  nuevo: Order = {
+    id: 0,
+    name: '',
+    total: 0
+  };
 
-crearPedido() {
-  this.crear.emit(this.nuevo);
-  this.nuevo = { nombre: '', total: 0 };
-}
+  editando: boolean = false;
+  editandoId: number = 0;
+
+  crearPedido() {
+    if (this.editando) {
+      this.editar.emit({ pedido: this.nuevo, id: this.editandoId });
+      this.cancelarEdicion();
+    } else {
+      this.crear.emit(this.nuevo);
+      this.nuevo = { id: 0, name: '', total: 0 };
+    }
+  }
+
+  editarPedido(pedido: Order, id: number) {
+    this.editando = true;
+    this.editandoId = id;
+    this.nuevo = { ...pedido };
+  }
+
+  cancelarEdicion() {
+    this.editando = false;
+    this.editandoId = 0;
+    this.nuevo = { id: 0, name: '', total: 0 };
+  }
+
+  eliminarPedido(id: number) {
+    if (confirm('¿Estás seguro de que quieres eliminar este pedido?')) {
+      this.eliminar.emit(id);
+    }
+  }
 }

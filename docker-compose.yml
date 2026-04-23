@@ -9,4 +9,4 @@ services:
     restart: unless-stopped
     environment:
       - NODE_ENV=production
-      - PEDIDO_API_URL=http://localhost:8081
+      - PEDIDO_API_URL=http://localhost:8081      - PEDIDOS_ENDPOINT=/orders

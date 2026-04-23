@@ -10,7 +10,9 @@ import { PedidoListComponent } from '../../components/pedido-list/pedido-list';
   template: `
     <app-pedido-list
       [pedidos]="pedidos$ | async"
-      (crear)="crear($event)">
+      (crear)="crear($event)"
+      (editar)="editar($event)"
+      (eliminar)="eliminar($event)">
     </app-pedido-list>
   `
 })
@@ -31,5 +33,15 @@ export class PedidoContainer {
   crear(pedido: any) {
     console.log('Container recibe:', pedido); // debug
     this.facade.crear(pedido);
+  }
+
+  editar(event: {pedido: any, id: number}) {
+    console.log('Container recibe editar:', event); // debug
+    this.facade.editar(event.pedido, event.id);
+  }
+
+  eliminar(id: number) {
+    console.log('Container recibe eliminar:', id); // debug
+    this.facade.eliminar(id);
   }
 }

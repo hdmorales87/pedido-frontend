@@ -5,12 +5,12 @@ import { PedidoContainer } from './features/pedidos/pages/pedido-container/pedid
 
 export const routes: Routes = [
   {
-    path: 'pedidos',
+    path: 'orders',
     component: PedidoContainer
   },
   {
     path: '',
-    redirectTo: 'pedidos',
+    redirectTo: 'orders',
     pathMatch: 'full'
   }
 ];

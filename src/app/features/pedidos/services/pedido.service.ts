@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Pedido } from "../models/pedido";
+import { Order } from "../models/order";
 import { ConfigService } from "../../../core/config.service";
 
 @Injectable({ providedIn: 'root' })
@@ -12,12 +12,22 @@ export class PedidoService {
   ) {}
 
   listar() {
-    const apiUrl = `${this.configService.getApiUrl()}/pedidos`;
-    return this.http.get<Pedido[]>(apiUrl);
+    const apiUrl = `${this.configService.getApiUrl()}${this.configService.getPedidosEndpoint()}`;
+    return this.http.get<Order[]>(apiUrl);
   }
 
-  crear(pedido: Pedido) {
-    const apiUrl = `${this.configService.getApiUrl()}/pedidos`;
-    return this.http.post<Pedido>(apiUrl, pedido);
+  crear(pedido: Order) {
+    const apiUrl = `${this.configService.getApiUrl()}${this.configService.getPedidosEndpoint()}`;
+    return this.http.post<Order>(apiUrl, pedido);
+  }
+
+  editar(pedido: Order, id: number) {
+    const apiUrl = `${this.configService.getApiUrl()}${this.configService.getPedidosEndpoint()}/${id}`;
+    return this.http.put<Order>(apiUrl, pedido);
+  }
+
+  eliminar(id: number) {
+    const apiUrl = `${this.configService.getApiUrl()}${this.configService.getPedidosEndpoint()}/${id}`;
+    return this.http.delete(apiUrl);
   }
 }

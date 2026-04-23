@@ -4,6 +4,7 @@ import { firstValueFrom } from 'rxjs';
 
 interface Config {
   apiUrl: string;
+  pedidosEndpoint: string;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -22,11 +23,18 @@ export class ConfigService {
     } catch (error) {
       console.error('Failed to load config:', error);
       // Fallback to default
-      this.configSignal.set({ apiUrl: 'http://localhost:8080' });
+      this.configSignal.set({
+        apiUrl: 'http://localhost:8080',
+        pedidosEndpoint: '/orders'
+      });
     }
   }
 
   getApiUrl(): string {
     return this.configSignal()?.apiUrl || 'http://localhost:8080';
   }
+
+  getPedidosEndpoint(): string {
+    return this.configSignal()?.pedidosEndpoint || '/orders';
+  }  
 }

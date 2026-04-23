@@ -1,12 +1,12 @@
 import { Routes } from '@angular/router';
-import { PedidoContainer } from './features/pedidos/pages/pedido-container/pedido-container';
+import { OrderContainer } from './features/orders/pages/order-container/order-container';
 
 
 
 export const routes: Routes = [
   {
     path: 'orders',
-    component: PedidoContainer
+    component: OrderContainer
   },
   {
     path: '',

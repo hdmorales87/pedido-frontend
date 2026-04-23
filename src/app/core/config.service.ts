@@ -4,7 +4,7 @@ import { firstValueFrom } from 'rxjs';
 
 interface Config {
   apiUrl: string;
-  pedidosEndpoint: string;
+  ordersEndpoint: string;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -25,7 +25,7 @@ export class ConfigService {
       // Fallback to default
       this.configSignal.set({
         apiUrl: 'http://localhost:8080',
-        pedidosEndpoint: '/orders'
+        ordersEndpoint: '/orders'
       });
     }
   }
@@ -34,7 +34,7 @@ export class ConfigService {
     return this.configSignal()?.apiUrl || 'http://localhost:8080';
   }
 
-  getPedidosEndpoint(): string {
-    return this.configSignal()?.pedidosEndpoint || '/orders';
+  getOrdersEndpoint(): string {
+    return this.configSignal()?.ordersEndpoint || '/orders';
   }  
 }

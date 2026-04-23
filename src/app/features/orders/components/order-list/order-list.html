@@ -5,42 +5,42 @@
         <div class="card-body p-4 p-md-5">
           <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4">
             <div>
-              <h2 class="h4 mb-1">📦 Lista de Pedidos</h2>
-              <p class="text-muted mb-0">Administra tus pedidos y crea nuevos pedidos de forma rápida.</p>
+              <h2 class="h4 mb-1">📦 Order List</h2>
+              <p class="text-muted mb-0">Manage your orders and create new orders quickly.</p>
             </div>
-            <span class="badge bg-primary fs-6 mt-3 mt-md-0">{{ pedidos?.length ?? 0 }} pedidos</span>
+            <span class="badge bg-primary fs-6 mt-3 mt-md-0">{{ orders?.length ?? 0 }} orders</span>
           </div>
 
-          <div *ngIf="!pedidos || pedidos.length === 0" class="alert alert-info">
-            No hay pedidos registrados
+          <div *ngIf="!orders || orders.length === 0" class="alert alert-info">
+            No orders registered
           </div>
 
-          <div *ngIf="pedidos && pedidos.length > 0" class="table-responsive mb-4">
+          <div *ngIf="orders && orders.length > 0" class="table-responsive mb-4">
             <table class="table table-striped align-middle mb-0">
               <thead class="table-light">
                 <tr>
-                  <th>Nombre</th>
+                  <th>Name</th>
                   <th class="text-end">Total</th>
-                  <th class="text-center">Acciones</th>
+                  <th class="text-center">Actions</th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let p of pedidos">
+                <tr *ngFor="let p of orders">
                   <td>{{ p.name }}</td>
                   <td class="text-end">${{ p.total }}</td>
                   <td class="text-center">
                     <button
                       type="button"
                       class="btn btn-sm btn-outline-primary me-2"
-                      (click)="editarPedido(p, p.id)"
-                      title="Editar pedido">
+                      (click)="editOrder(p, p.id)"
+                      title="Edit order">
                       ✏️
                     </button>
                     <button
                       type="button"
                       class="btn btn-sm btn-outline-danger"
-                      (click)="eliminarPedido(p.id)"
-                      title="Eliminar pedido">
+                      (click)="deleteOrder(p.id)"
+                      title="Delete order">
                       🗑️
                     </button>
                   </td>
@@ -52,15 +52,15 @@
           <hr />
 
           <div>
-            <h3 class="h5 mb-3">{{ editando ? '✏️ Editar Pedido' : '➕ Crear Pedido' }}</h3>
+            <h3 class="h5 mb-3">{{ editing ? '✏️ Edit Order' : '➕ Create Order' }}</h3>
 
-            <form (ngSubmit)="crearPedido()" class="row g-3">
+            <form (ngSubmit)="createOrder()" class="row g-3">
               <div class="col-md-6">
-                <label class="form-label">Nombre:</label>
+                <label class="form-label">Name:</label>
                 <input
                   type="text"
                   class="form-control"
-                  [(ngModel)]="nuevo.name"
+                  [(ngModel)]="newOrder.name"
                   name="name"
                   required
                 />
@@ -71,7 +71,7 @@
                 <input
                   type="number"
                   class="form-control"
-                  [(ngModel)]="nuevo.total"
+                  [(ngModel)]="newOrder.total"
                   name="total"
                   min="0"
                   required
@@ -80,13 +80,13 @@
 
               <div class="col-md-2 d-grid">
                 <button type="submit" class="btn btn-primary">
-                  {{ editando ? 'Actualizar' : 'Crear' }}
+                  {{ editing ? 'Update' : 'Create' }}
                 </button>
               </div>
 
-              <div *ngIf="editando" class="col-12">
-                <button type="button" class="btn btn-secondary" (click)="cancelarEdicion()">
-                  Cancelar
+              <div *ngIf="editing" class="col-12">
+                <button type="button" class="btn btn-secondary" (click)="cancelEdit()">
+                  Cancel
                 </button>
               </div>
             </form>

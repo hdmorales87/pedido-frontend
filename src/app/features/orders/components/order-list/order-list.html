@@ -69,7 +69,7 @@
           <div>
             <h3 class="h5 mb-3">{{ editing ? '✏️ Edit Order' : '➕ Create Order' }}</h3>
 
-            <form (ngSubmit)="createOrder()" class="row g-3">
+            <form #orderForm="ngForm" (ngSubmit)="orderForm.valid && createOrder()" class="row g-3">
               <div class="col-md-4">
                 <label class="form-label">Name:</label>
                 <input
@@ -77,8 +77,19 @@
                   class="form-control"
                   [(ngModel)]="newOrder.name"
                   name="name"
+                  #nameField="ngModel"
                   required
+                  minlength="2"
+                  [ngClass]="{ 'is-invalid': nameField.invalid && (nameField.dirty || nameField.touched) }"
                 />
+                <div *ngIf="nameField.invalid && (nameField.dirty || nameField.touched)" class="invalid-feedback">
+                  <div *ngIf="nameField.errors?.['required']">
+                    Name is required
+                  </div>
+                  <div *ngIf="nameField.errors?.['minlength']">
+                    Name must be at least 2 characters long
+                  </div>
+                </div>
               </div>
 
               <div class="col-md-3">
@@ -88,13 +99,23 @@
                   class="form-control"
                   [(ngModel)]="newOrder.total"
                   name="total"
-                  min="0"
+                  #totalField="ngModel"
                   required
+                  min="0"
+                  [ngClass]="{ 'is-invalid': totalField.invalid && (totalField.dirty || totalField.touched) }"
                 />
+                <div *ngIf="totalField.invalid && (totalField.dirty || totalField.touched)" class="invalid-feedback">
+                  <div *ngIf="totalField.errors?.['required']">
+                    Total is required
+                  </div>
+                  <div *ngIf="totalField.errors?.['min']">
+                    Total must be greater than or equal to 0
+                  </div>
+                </div>
               </div>              
 
               <div class="col-md-2 d-grid">
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" class="btn btn-primary" [disabled]="orderForm.invalid">
                   {{ editing ? 'Update' : 'Create' }}
                 </button>
               </div>
